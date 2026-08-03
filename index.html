@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fernweg Coffee — Small-batch roasting</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Fernweg Coffee — small-batch, single-origin coffee roasted twice a week. Open daily in Ikoyi, Lagos.">
+<meta property="og:title" content="Fernweg Coffee">
+<meta property="og:description" content="Small-batch, single-origin coffee roasted twice a week.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --roast-black: #1E1712;
+    --parchment: #F2E9DC;
+    --copper: #C4652D;
+    --sage: #8A9A7E;
+    --ash: #6B6259;
+    --cream: #FBF7F0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--parchment);
+    color: var(--roast-black);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    line-height: 1.1;
+  }
+
+  .mono {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--copper);
+    outline-offset: 3px;
+  }
+
+  /* ---------- NAV ---------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(242, 233, 220, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(30, 23, 18, 0.08);
+  }
+
+  nav {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .logo svg { color: var(--copper); flex-shrink: 0; }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    font-size: 0.92rem;
+    color: var(--ash);
+  }
+
+  .nav-links a:hover { color: var(--copper); }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .nav-cta {
+    background: var(--roast-black);
+    color: var(--cream);
+    padding: 9px 18px;
+    border-radius: 3px;
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+
+  .nav-cta:hover { background: var(--copper); }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--roast-black);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding-top: 100px;
+    padding-bottom: 90px;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 60px;
+    align-items: end;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--copper);
+    border: 1px solid rgba(196, 101, 45, 0.4);
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    max-width: 11ch;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--copper);
+  }
+
+  .hero-sub {
+    max-width: 60ch;
+    color: var(--ash);
+    font-size: 1.05rem;
+    margin-top: 24px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 34px;
+  }
+
+  .btn-primary {
+    background: var(--roast-black);
+    color: var(--cream);
+    padding: 13px 24px;
+    border-radius: 3px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--copper); }
+
+  .btn-ghost {
+    border: 1px solid rgba(30,23,18,0.25);
+    padding: 12px 24px;
+    border-radius: 3px;
+    font-size: 0.92rem;
+    display: inline-block;
+  }
+
+  .btn-ghost:hover { border-color: var(--roast-black); }
+
+  .hero-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+
+  .hero-illustration {
+    width: 100%;
+    max-width: 220px;
+    align-self: center;
+  }
+
+  .roast-card {
+    background: var(--roast-black);
+    color: var(--parchment);
+    padding: 26px;
+    border-radius: 6px;
+  }
+
+  .roast-card .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sage);
+    margin-bottom: 10px;
+  }
+
+  .roast-card .origin {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+  }
+
+  .roast-card .lot {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    color: rgba(242,233,220,0.6);
+  }
+
+  .roast-card .divider {
+    height: 1px;
+    background: rgba(242,233,220,0.15);
+    margin: 18px 0;
+  }
+
+  .roast-notes {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .roast-notes span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    border: 1px solid rgba(242,233,220,0.25);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  /* ---------- ABOUT / STATS ---------- */
+  .about {
+    padding-top: 90px;
+    padding-bottom: 90px;
+    border-top: 1px solid rgba(30,23,18,0.08);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+
+  .about h2 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    max-width: 12ch;
+    margin-bottom: 20px;
+  }
+
+  .about p {
+    color: var(--ash);
+    max-width: 48ch;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-content: start;
+  }
+
+  .stat .num {
+    font-family: 'Fraunces', serif;
+    font-size: 2.4rem;
+    color: var(--copper);
+  }
+
+  .stat .desc {
+    font-size: 0.85rem;
+    color: var(--ash);
+    margin-top: 4px;
+  }
+
+  /* ---------- BEAN DIVIDER ---------- */
+  .bean-divider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding-bottom: 60px;
+    color: var(--copper);
+    opacity: 0.4;
+  }
+
+  .bean-divider svg { width: 16px; height: 16px; flex-shrink: 0; }
+  .bean-divider svg:nth-child(2n) { transform: rotate(35deg); }
+  .bean-divider svg:nth-child(3n) { transform: rotate(-25deg); }
+
+  /* ---------- MENU ---------- */
+  .menu {
+    padding: 30px 0 90px;
+    background: var(--roast-black);
+    color: var(--parchment);
+  }
+
+  .menu-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 48px;
+  }
+
+  .menu-head h2 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    color: var(--cream);
+  }
+
+  .menu-head .mono {
+    color: var(--sage);
+    font-size: 0.8rem;
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 60px;
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 16px 0;
+    border-bottom: 1px dashed rgba(242,233,220,0.18);
+  }
+
+  .menu-item .name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+  }
+
+  .menu-item .desc {
+    font-size: 0.8rem;
+    color: rgba(242,233,220,0.55);
+    margin-top: 3px;
+  }
+
+  .menu-item .price {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--copper);
+    font-size: 0.95rem;
+    white-space: nowrap;
+    padding-left: 20px;
+  }
+
+  /* ---------- BREW GUIDE (signature) ---------- */
+  .brew {
+    padding-top: 90px;
+    padding-bottom: 90px;
+  }
+
+  .brew-head {
+    max-width: 50ch;
+    margin-bottom: 56px;
+  }
+
+  .brew-head h2 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    margin-bottom: 16px;
+  }
+
+  .brew-head p { color: var(--ash); }
+
+  .timeline {
+    position: relative;
+    padding-left: 90px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 62px;
+    top: 6px;
+    bottom: 6px;
+    width: 1px;
+    background: rgba(30,23,18,0.15);
+  }
+
+  .step {
+    position: relative;
+    padding-bottom: 44px;
+  }
+
+  .step:last-child { padding-bottom: 0; }
+
+  .step .time {
+    position: absolute;
+    left: -90px;
+    top: 0;
+    width: 56px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--copper);
+    text-align: right;
+  }
+
+  .step::after {
+    content: '';
+    position: absolute;
+    left: -32px;
+    top: 4px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--copper);
+    border: 2px solid var(--parchment);
+  }
+
+  .step h3 {
+    font-size: 1.15rem;
+    margin-bottom: 6px;
+  }
+
+  .step p {
+    color: var(--ash);
+    max-width: 52ch;
+    font-size: 0.94rem;
+  }
+
+  /* ---------- VISIT ---------- */
+  .visit {
+    padding-top: 90px;
+    padding-bottom: 90px;
+    background: var(--cream);
+    border-top: 1px solid rgba(30,23,18,0.08);
+    border-bottom: 1px solid rgba(30,23,18,0.08);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+
+  .visit h2 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    margin-bottom: 24px;
+  }
+
+  .hours-table {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .hours-table div {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(30,23,18,0.08);
+    font-size: 0.92rem;
+  }
+
+  .hours-table .day { color: var(--roast-black); font-weight: 500; }
+  .hours-table .time { font-family: 'IBM Plex Mono', monospace; color: var(--ash); }
+
+  .visit-info p {
+    color: var(--ash);
+    margin-bottom: 22px;
+  }
+
+  .visit-info .addr {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    color: var(--roast-black);
+    margin-bottom: 6px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    color: var(--ash);
+  }
+
+  footer .logo { font-size: 1rem; }
+  footer .logo svg { color: var(--ash); }
+
+  .disclaimer {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(30,23,18,0.08);
+    text-align: center;
+    font-size: 0.74rem;
+    color: var(--ash);
+    opacity: 0.75;
+  }
+
+  /* ---------- REVEAL ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ---------- MOBILE ---------- */
+  @media (max-width: 760px) {
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 16px;
+      background: var(--parchment);
+      padding: 18px 24px 24px;
+      border-bottom: 1px solid rgba(30,23,18,0.08);
+    }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: flex; }
+
+    .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 70px; padding-bottom: 60px; }
+    .hero-illustration { max-width: 160px; }
+    .hero-actions { flex-direction: column; }
+    .hero-actions a { text-align: center; }
+
+    .about { grid-template-columns: 1fr; gap: 40px; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .visit { grid-template-columns: 1fr; }
+    .timeline { padding-left: 70px; }
+    .step .time { left: -70px; width: 44px; font-size: 0.72rem; }
+    .bean-divider { gap: 18px; padding-bottom: 44px; }
+    .footer-row { flex-direction: column; gap: 10px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#" class="logo">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M20 3C11 3 4 11 4 20s7 17 16 17 16-8 16-17S29 3 20 3Z" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M20 5C14 10 14 30 20 35" fill="none" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      Fernweg
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#menu">Menu</a>
+      <a href="#brew">Brew Guide</a>
+      <a href="#visit">Visit</a>
+    </div>
+    <div class="nav-actions">
+      <a href="#visit" class="nav-cta">Find us</a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<section class="hero wrap">
+  <div>
+    <span class="hero-eyebrow mono">Neighborhood roaster · est. this block</span>
+    <h1>We roast twice a week.<br>You taste <em>the difference.</em></h1>
+    <p class="hero-sub">Small batches, rested 48 hours before grinding, pulled by people who'll tell you exactly why today's cup tastes different from last Tuesday's.</p>
+    <div class="hero-actions">
+      <a href="#visit" class="btn-primary">Find us today</a>
+      <a href="#menu" class="btn-ghost">See the menu</a>
+    </div>
+  </div>
+  <div class="hero-visual reveal">
+    <svg class="hero-illustration" viewBox="0 0 200 200" aria-hidden="true">
+      <path d="M62 26c-8 9 7 13 0 24M92 18c-8 9 7 13 0 24M122 26c-8 9 7 13 0 24" stroke="var(--sage)" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.8"/>
+      <path d="M50 62h100l-32 54H82L50 62Z" fill="none" stroke="var(--copper)" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M56 126h88v36a11 11 0 0 1-11 11H67a11 11 0 0 1-11-11v-36Z" fill="none" stroke="var(--roast-black)" stroke-width="2.5"/>
+      <path d="M144 135h9a13 13 0 0 1 0 26h-9" fill="none" stroke="var(--roast-black)" stroke-width="2.5"/>
+      <line x1="44" y1="178" x2="156" y2="178" stroke="var(--ash)" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    <div class="roast-card">
+      <div class="label">Currently pouring</div>
+      <div class="origin">Ethiopia Yirgacheffe</div>
+      <div class="lot mono">Lot 14 · washed process</div>
+      <div class="divider"></div>
+      <div class="roast-notes">
+        <span>jasmine</span>
+        <span>peach</span>
+        <span>black tea</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about wrap">
+  <div class="reveal">
+    <h2>Coffee is a decision made three times.</h2>
+    <p>Once by the farmer, once by the roaster, once by whoever pulls your shot. We only control the last two — so we take them seriously. Every bag is dated, every batch is logged, and if a roast doesn't meet the bar, it doesn't go on the shelf.</p>
+  </div>
+  <div class="stat-grid reveal">
+    <div class="stat">
+      <div class="num">12</div>
+      <div class="desc">origins rotated through the year</div>
+    </div>
+    <div class="stat">
+      <div class="num">48h</div>
+      <div class="desc">rest time before a bean gets ground</div>
+    </div>
+    <div class="stat">
+      <div class="num">2×</div>
+      <div class="desc">weekly roast batches, always small</div>
+    </div>
+    <div class="stat">
+      <div class="num">6am</div>
+      <div class="desc">doors open, every single day</div>
+    </div>
+  </div>
+</section>
+
+<div class="bean-divider wrap reveal" aria-hidden="true">
+  <svg viewBox="0 0 40 40"><path d="M20 3C11 3 4 11 4 20s7 17 16 17 16-8 16-17S29 3 20 3Z" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M20 5C14 10 14 30 20 35" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+  <svg viewBox="0 0 40 40"><path d="M20 3C11 3 4 11 4 20s7 17 16 17 16-8 16-17S29 3 20 3Z" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M20 5C14 10 14 30 20 35" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+  <svg viewBox="0 0 40 40"><path d="M20 3C11 3 4 11 4 20s7 17 16 17 16-8 16-17S29 3 20 3Z" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M20 5C14 10 14 30 20 35" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+  <svg viewBox="0 0 40 40"><path d="M20 3C11 3 4 11 4 20s7 17 16 17 16-8 16-17S29 3 20 3Z" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M20 5C14 10 14 30 20 35" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+  <svg viewBox="0 0 40 40"><path d="M20 3C11 3 4 11 4 20s7 17 16 17 16-8 16-17S29 3 20 3Z" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M20 5C14 10 14 30 20 35" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+</div>
+
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="menu-head reveal">
+      <h2>On the counter</h2>
+      <span class="mono">updated weekly</span>
+    </div>
+    <div class="menu-grid reveal">
+      <div>
+        <div class="menu-item">
+          <div>
+            <div class="name">Pour Over</div>
+            <div class="desc">Today's single origin, brewed to order</div>
+          </div>
+          <div class="price">$5.50</div>
+        </div>
+        <div class="menu-item">
+          <div>
+            <div class="name">Cortado</div>
+            <div class="desc">Equal parts espresso and steamed milk</div>
+          </div>
+          <div class="price">$4.75</div>
+        </div>
+        <div class="menu-item">
+          <div>
+            <div class="name">Batch Drip</div>
+            <div class="desc">House blend, brewed every 30 minutes</div>
+          </div>
+          <div class="price">$3.25</div>
+        </div>
+      </div>
+      <div>
+        <div class="menu-item">
+          <div>
+            <div class="name">Oat Cortado</div>
+            <div class="desc">Same as above, oat milk instead</div>
+          </div>
+          <div class="price">$5.25</div>
+        </div>
+        <div class="menu-item">
+          <div>
+            <div class="name">Cold Brew</div>
+            <div class="desc">Steeped 18 hours, served over ice</div>
+          </div>
+          <div class="price">$4.50</div>
+        </div>
+        <div class="menu-item">
+          <div>
+            <div class="name">Bag to Go</div>
+            <div class="desc">340g of whatever's on the counter</div>
+          </div>
+          <div class="price">$18.00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="brew wrap" id="brew">
+  <div class="brew-head reveal">
+    <h2>How we pour at the bar</h2>
+    <p>The same recipe we use behind the counter — for 300g water to 20g coffee, medium-fine grind.</p>
+  </div>
+  <div class="timeline">
+    <div class="step reveal">
+      <div class="time mono">0:00</div>
+      <h3>Bloom</h3>
+      <p>Pour 40g water, just off the boil. Let it sit — you'll see it puff up as the coffee releases CO₂.</p>
+    </div>
+    <div class="step reveal">
+      <div class="time mono">0:30</div>
+      <h3>First pour</h3>
+      <p>Pour to 150g in slow concentric circles, working from the center out.</p>
+    </div>
+    <div class="step reveal">
+      <div class="time mono">1:15</div>
+      <h3>Second pour</h3>
+      <p>Top up to 220g. Keep the bed of coffee flat and evenly saturated.</p>
+    </div>
+    <div class="step reveal">
+      <div class="time mono">1:45</div>
+      <h3>Final pour</h3>
+      <p>Bring it up to 300g total, then let it draw down completely on its own.</p>
+    </div>
+    <div class="step reveal">
+      <div class="time mono">3:00</div>
+      <h3>Serve</h3>
+      <p>Give it a swirl, pour, and drink it while it's still finding its shape.</p>
+    </div>
+  </div>
+</section>
+
+<section class="visit wrap" id="visit">
+  <div class="reveal">
+    <h2>Come find us</h2>
+    <div class="visit-info">
+      <p class="addr">24 Awolowo Road, Ikoyi</p>
+      <p>Corner spot, green awning, usually a line but it moves fast.</p>
+      <a href="https://www.google.com/maps/search/?api=1&query=24+Awolowo+Road,+Ikoyi,+Lagos" target="_blank" rel="noopener" class="btn-primary">Get directions</a>
+    </div>
+  </div>
+  <div class="hours-table reveal">
+    <div><span class="day">Mon – Fri</span><span class="time">6:00am – 6:00pm</span></div>
+    <div><span class="day">Saturday</span><span class="time">7:00am – 6:00pm</span></div>
+    <div><span class="day">Sunday</span><span class="time">7:00am – 3:00pm</span></div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="footer-row">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M20 3C11 3 4 11 4 20s7 17 16 17 16-8 16-17S29 3 20 3Z" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M20 5C14 10 14 30 20 35" fill="none" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      Fernweg Coffee
+    </div>
+    <div>24 Awolowo Road, Ikoyi, Lagos · Made with care, poured with patience</div>
+  </div>
+  <div class="disclaimer">Fernweg Coffee is a fictional business. This page is a web design sample and does not represent a real café or location.</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.15 });
+    els.forEach(el => io.observe(el));
+  } else {
+    els.forEach(el => el.classList.add('in'));
+  }
+
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  navLinks.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
