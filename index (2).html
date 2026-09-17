@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Se-erena</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Literata:ital,wght@0,400;0,500;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-1:#211324;
+    --bg-2:#2f1c30;
+    --paper:#f8efdd;
+    --paper-edge:#efe1c8;
+    --gold:#d9a441;
+    --gold-soft:#e8c98a;
+    --rose:#c97b84;
+    --ink:#2e1b1e;
+    --muted:#8a746b;
+    --shadow: rgba(10,4,10,0.55);
+  }
+  :root:not([data-theme="light"]){ color-scheme: dark; }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ color-scheme: dark; } }
+
+  *{ box-sizing:border-box; }
+  html,body{
+    margin:0; padding:0; min-height:100%;
+    background:
+      radial-gradient(1200px 700px at 20% 15%, #3a2440 0%, transparent 60%),
+      radial-gradient(1000px 600px at 85% 80%, #3a1f38 0%, transparent 55%),
+      linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    font-family:'Literata', Georgia, serif;
+    color:#f2e9de;
+    overflow-x:hidden;
+    min-height:100vh;
+  }
+
+  .sky{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+  }
+  .firefly{
+    position:absolute; width:3px; height:3px; border-radius:50%;
+    background: var(--gold-soft);
+    box-shadow: 0 0 8px 2px var(--gold-soft);
+    opacity:.55;
+    animation: drift 9s ease-in-out infinite;
+  }
+  @keyframes drift{
+    0%,100%{ transform: translateY(0) translateX(0); opacity:.35; }
+    50%{ transform: translateY(-26px) translateX(10px); opacity:.85; }
+  }
+
+  .stage{
+    position:relative; z-index:1;
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    padding: 6vh 5vw;
+  }
+
+  h1{
+    font-family:'Playfair Display', serif;
+    font-weight:700; font-style:italic;
+    letter-spacing: 0.01em;
+    line-height:1.05;
+  }
+
+  /* ---------- Envelope ---------- */
+  .envelope-wrap{
+    position:relative;
+    width:min(420px, 86vw);
+    aspect-ratio: 3/2;
+    cursor:pointer;
+    perspective: 1400px;
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .envelope-wrap.opened{
+    opacity:0;
+    transform: scale(.92);
+    pointer-events:none;
+  }
+  .env-body{
+    position:absolute; inset:0;
+    background: linear-gradient(160deg, #d8c5a3, #c9ac7b);
+    border-radius:6px;
+    box-shadow: 0 30px 60px var(--shadow), 0 4px 0 rgba(0,0,0,.15) inset;
+  }
+  .env-shade{
+    position:absolute; inset:0; border-radius:6px;
+    background: linear-gradient(135deg, rgba(0,0,0,.12), transparent 55%);
+  }
+  .env-flap{
+    position:absolute; top:0; left:0; right:0; height:58%;
+    background: linear-gradient(160deg, #e6d3ac, #cdae7d);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center;
+    transform-style: preserve-3d;
+    transition: transform 1s cubic-bezier(.6,-0.1,.2,1.2);
+    box-shadow: 0 2px 6px rgba(0,0,0,.18);
+    z-index:3;
+  }
+  .envelope-wrap.opened .env-flap{ transform: rotateX(180deg); }
+  .wax{
+    position:absolute; left:50%; top:34%; transform:translate(-50%,-50%);
+    width:44px; height:44px; border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, #e0919b, var(--rose) 60%, #96525b 100%);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display', serif; font-weight:700; color:#fbeee7;
+    box-shadow: 0 3px 8px rgba(0,0,0,.35);
+    z-index:4; font-size:1.1rem;
+    transition: opacity .4s ease;
+  }
+  .envelope-wrap.opened .wax{ opacity:0; }
+  .to-line{
+    position:absolute; left:50%; bottom:20%; transform:translateX(-50%);
+    font-family:'Caveat', cursive; font-size:1.6rem; color:#5a4326;
+    z-index:2; text-align:center; white-space:nowrap;
+  }
+  .hint{
+    position:absolute; left:50%; bottom:-2.6rem; transform:translateX(-50%);
+    font-size:.85rem; letter-spacing:.02em; color:#c9b8a8;
+    font-family:'Literata', serif; font-style:italic;
+  }
+
+  /* ---------- Letter ---------- */
+  .letter{
+    position:fixed; inset:0; z-index:2;
+    display:flex; align-items:flex-start; justify-content:center;
+    padding: 6vh 5vw 8vh;
+    overflow-y:auto;
+    opacity:0; visibility:hidden; transform: translateY(30px);
+    transition: opacity .8s ease .15s, transform .8s ease .15s;
+  }
+  .letter.show{ opacity:1; visibility:visible; transform:translateY(0); }
+
+  .card{
+    background: var(--paper);
+    color: var(--ink);
+    width:min(620px, 100%);
+    border-radius:3px;
+    padding: 3.2rem 2.6rem 2.6rem;
+    box-shadow: 0 40px 80px var(--shadow), 0 0 0 1px var(--paper-edge) inset;
+    position:relative;
+  }
+  .card::before{
+    content:"";
+    position:absolute; inset:10px;
+    border:1px solid rgba(46,27,30,0.08);
+    pointer-events:none;
+  }
+  .eyebrow-name{
+    font-family:'Caveat', cursive; font-size:1.3rem; color:var(--rose); margin:0 0 .2rem;
+  }
+  .card h1{
+    margin:0 0 1.4rem; font-size: clamp(1.9rem, 5vw, 2.6rem); color:var(--ink);
+  }
+  .card p{
+    font-size:1.05rem; line-height:1.75; margin:0 0 1.1rem; color:#3a2a26;
+  }
+  .card p:first-of-type::first-letter{
+    font-family:'Playfair Display', serif;
+    font-size:2.6rem; float:left; line-height:0.8; padding:.08em .08em 0 0;
+    color: var(--gold);
+  }
+  .sign{
+    margin-top:1.8rem; font-family:'Caveat', cursive; font-size:1.9rem; color:var(--rose);
+  }
+
+  .candle-row{
+    margin-top:2rem; padding-top:1.4rem; border-top:1px dashed rgba(46,27,30,.2);
+    display:flex; align-items:center; gap:1rem; flex-wrap:wrap;
+  }
+  .candle-btn{
+    all:unset; cursor:pointer;
+    display:flex; align-items:center; gap:.6rem;
+    font-family:'Literata', serif; font-size:.95rem; color:var(--ink);
+    padding:.55rem 1rem; border-radius:999px;
+    background:#fff8ec; box-shadow: 0 2px 0 rgba(0,0,0,.06), 0 0 0 1px rgba(46,27,30,.08) inset;
+  }
+  .candle-btn:active{ transform: translateY(1px); }
+  .flame{
+    width:10px; height:14px; border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+    background: radial-gradient(circle at 50% 30%, #fff2c7, var(--gold) 60%, #b9711f);
+    box-shadow: 0 0 10px 2px rgba(217,164,65,.7);
+    animation: flicker 1.4s ease-in-out infinite;
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  .flame.out{ opacity:0; transform: scaleY(0.2); box-shadow:none; }
+  @keyframes flicker{
+    0%,100%{ transform: scaleY(1) rotate(-1deg); }
+    50%{ transform: scaleY(1.08) rotate(1.5deg); }
+  }
+  .wish-msg{
+    font-family:'Caveat', cursive; font-size:1.25rem; color:var(--muted);
+    opacity:0; transition: opacity .5s ease;
+  }
+  .wish-msg.show{ opacity:1; }
+
+  .confetti-piece{
+    position:fixed; top:-10px; width:8px; height:14px; z-index:5;
+    border-radius:2px; pointer-events:none;
+    animation: fall linear forwards;
+  }
+  @keyframes fall{
+    to{ transform: translateY(105vh) rotate(540deg); opacity:.9; }
+  }
+
+  @media (max-width: 480px){
+    .card{ padding: 2.4rem 1.5rem 2rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .firefly, .flame, .env-flap{ animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sky" id="sky"></div>
+
+<div class="stage">
+  <div class="envelope-wrap" id="envelope" role="button" tabindex="0" aria-label="Open your birthday letter">
+    <div class="env-shade"></div>
+    <div class="env-body"></div>
+    <div class="to-line">for Se-erena</div>
+    <div class="env-flap"></div>
+    <div class="wax">S</div>
+    <div class="hint">tap the envelope to open it</div>
+  </div>
+</div>
+
+<div class="letter" id="letter">
+  <div class="card">
+    <p class="eyebrow-name">Dear Se-erena,</p>
+    <h1>Happy birthday to someone I almost lost, and I'm so glad I didn't.</h1>
+
+    <p>I've rewritten how to start this a few times, so I'll just say it plainly: I'm really glad you're in my life.</p>
+
+    <p>We've had our rough patches this year, more than a few, if I'm honest. There was a stretch where I genuinely wasn't sure we'd find our way back to each other. But somehow we did, and it's been one of the better surprises of this year. You showed up for me in ways I didn't expect, and I don't think I ever properly said thank you for pulling me out of some things I was struggling with. So — thank you. Late, but real.</p>
+
+    <p>Today isn't just about cake and candles, though I hope you get plenty of both. It's me telling you, in writing this time, that I see you, I appreciate you, and I don't take it for granted that we're choosing to rebuild this. Here's to fewer misunderstandings, more inside jokes, and a lot less distance between us going forward.</p>
+
+    <p>Have the birthday you deserve, Se-erena. You've earned every bit of it.</p>
+
+    <p class="sign">— Your Person(I hope still)</p>
+
+    <div class="candle-row">
+      <button class="candle-btn" id="candleBtn"><span class="flame" id="flame"></span> blow out the candle</button>
+      <span class="wish-msg" id="wishMsg">wish made. happy birthday 🎉</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // fireflies
+  const sky = document.getElementById('sky');
+  for(let i=0;i<18;i++){
+    const f = document.createElement('div');
+    f.className='firefly';
+    f.style.left = Math.random()*100+'vw';
+    f.style.top = Math.random()*100+'vh';
+    f.style.animationDelay = (Math.random()*8)+'s';
+    f.style.animationDuration = (7+Math.random()*6)+'s';
+    sky.appendChild(f);
+  }
+
+  // envelope open
+  const envelope = document.getElementById('envelope');
+  const letter = document.getElementById('letter');
+  function openEnvelope(){
+    if(envelope.classList.contains('opened')) return;
+    envelope.classList.add('opened');
+    setTimeout(()=>{ letter.classList.add('show'); }, 500);
+  }
+  envelope.addEventListener('click', openEnvelope);
+  envelope.addEventListener('keypress', e=>{ if(e.key==='Enter' || e.key===' ') openEnvelope(); });
+
+  // candle blow + confetti
+  const candleBtn = document.getElementById('candleBtn');
+  const flame = document.getElementById('flame');
+  const wishMsg = document.getElementById('wishMsg');
+  const colors = ['#d9a441','#c97b84','#e8c98a','#8a746b','#f2e9de'];
+  candleBtn.addEventListener('click', ()=>{
+    if(flame.classList.contains('out')) return;
+    flame.classList.add('out');
+    wishMsg.classList.add('show');
+    for(let i=0;i<60;i++){
+      const c = document.createElement('div');
+      c.className='confetti-piece';
+      c.style.left = Math.random()*100+'vw';
+      c.style.background = colors[Math.floor(Math.random()*colors.length)];
+      c.style.animationDuration = (2.4+Math.random()*1.6)+'s';
+      c.style.animationDelay = (Math.random()*0.4)+'s';
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(), 4500);
+    }
+  });
+</script>
+</body>
+</html>
